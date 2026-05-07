@@ -9,19 +9,19 @@
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   :root {
-    --bg: #0038FF;
-    --bg-2: #002BCC;
-    --bg-shadow: #001A99;
-    --primary: #CCFF00;
-    --primary-dark: #A8D900;
-    --accent: #CCFF00;
-    --accent-2: #FFFF66;
+    --bg: #0c1e3d;
+    --bg-2: #14294d;
+    --bg-shadow: #050d1c;
+    --primary: #2563EB;
+    --primary-dark: #1d4ed8;
+    --accent: #2563EB;
+    --accent-2: #3b82f6;
     --text: #ffffff;
-    --text-dim: #E0E8FF;
-    --text-mute: #B8C4F0;
-    --card: rgba(255, 255, 255, 0.18);
-    --card-2: rgba(255, 255, 255, 0.25);
-    --border: rgba(255, 255, 255, 0.4);
+    --text-dim: #cbd5e1;
+    --text-mute: #94a3b8;
+    --card: rgba(255, 255, 255, 0.06);
+    --card-2: rgba(255, 255, 255, 0.1);
+    --border: rgba(255, 255, 255, 0.12);
     --danger: #FF3366;
   }
 
@@ -34,28 +34,19 @@
     line-height: 1.5;
   }
 
-  /* ===== Background azul vibrante com grid ===== */
+  /* ===== Background navy escuro ===== */
   body {
-    background: #0038FF;
+    background:
+      radial-gradient(ellipse at top, #14294d 0%, #0c1e3d 50%, #050d1c 100%);
+    background-attachment: fixed;
     position: relative;
   }
-  /* Grid pattern */
   body::before {
     content: '';
     position: fixed; inset: 0;
-    background-image:
-      linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: 4rem 4rem;
-    pointer-events: none; z-index: 0;
-  }
-  /* Glow dourado/limão sutil */
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
     background:
-      radial-gradient(circle at 80% 20%, rgba(204, 255, 0, 0.06) 0%, transparent 50%),
-      radial-gradient(circle at 20% 80%, rgba(204, 255, 0, 0.04) 0%, transparent 50%);
+      radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
     pointer-events: none; z-index: 0;
   }
   .container { position: relative; z-index: 1; }
@@ -108,22 +99,27 @@
   }
   .hero-line {
     font-family: 'Arial Black', Impact, sans-serif;
-    font-size: clamp(36px, 11vw, 64px);
+    font-size: clamp(38px, 12vw, 70px);
     font-weight: 900;
-    line-height: 0.9;
+    line-height: 0.92;
     letter-spacing: -0.02em;
     text-transform: uppercase;
     color: #ffffff;
     margin: 0;
     padding: 0;
     text-align: center;
-    text-shadow:
-      1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99,
-      4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99,
-      7px 7px 0 #001A99, 8px 8px 0 #001A99;
   }
-  .hero-line.lime {
-    color: #CCFF00;
+  .hero-line.blue {
+    color: #2563EB;
+  }
+  .hero-line.small {
+    font-size: clamp(20px, 6vw, 32px);
+    letter-spacing: 0.02em;
+    color: var(--text-dim);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    margin-bottom: 4px;
   }
 
   /* Setas hand-drawn decorativas */
@@ -165,7 +161,113 @@
   .hero-badge svg { fill: #000; stroke: #000; }
   .hero-sub {
     font-size: 15px; color: var(--text-dim);
-    line-height: 1.6; margin-bottom: 28px;
+    line-height: 1.6; margin: 24px 0 28px;
+    text-align: center;
+  }
+  .hero-sub strong { color: #ffffff; font-weight: 700; }
+
+  /* ===== Seção Prêmios Incríveis ===== */
+  .prizes-section {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .prizes-eyebrow {
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .prizes-title {
+    text-align: center;
+    font-size: 32px; font-weight: 900;
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .prizes-title .blue-text { color: #2563EB; }
+  .prizes-desc {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  /* Slider horizontal */
+  .prizes-slider {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 12px;
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    scrollbar-width: none;
+  }
+  .prizes-slider::-webkit-scrollbar { display: none; }
+
+  .prize-slide {
+    flex: 0 0 88%;
+    min-width: 280px;
+    background: linear-gradient(160deg, rgba(20, 41, 77, 0.8) 0%, rgba(12, 30, 61, 0.9) 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 22px;
+    scroll-snap-align: center;
+    backdrop-filter: blur(8px);
+  }
+  .prize-slide-header {
+    text-align: center; margin-bottom: 20px;
+  }
+  .prize-slide-icon {
+    width: 36px; height: 36px;
+    color: #2563EB;
+    margin: 0 auto 8px;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.3));
+  }
+  .prize-slide-tag {
+    color: #2563EB;
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .prize-slide-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .prize-slide-list li {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+  }
+  .prize-slide-bullet {
+    width: 32px; height: 32px;
+    background: rgba(37, 99, 235, 0.15);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+    color: #2563EB; font-weight: 900;
+  }
+  .prize-slide-name {
+    font-size: 14px; font-weight: 700; color: var(--text);
+  }
+
+  .prizes-dots {
+    display: flex; justify-content: center; gap: 6px;
+    margin-top: 16px;
+  }
+  .prizes-dot {
+    width: 24px; height: 4px; border-radius: 2px;
+    background: var(--border);
+    transition: all 0.3s ease;
+  }
+  .prizes-dot.active {
+    background: #2563EB;
+    width: 32px;
   }
 
   .prizes-preview {
@@ -345,36 +447,40 @@
   /* ===== CTA ===== */
   .cta-wrap { padding: 24px 0 0; }
   .cta {
-    display: block; width: 100%;
-    padding: 20px 24px;
-    background: #CCFF00;
-    color: #001A99;
-    font-size: 17px; font-weight: 900; letter-spacing: 0.02em;
-    border: none; border-radius: 32px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(180deg, #3b82f6 0%, #2563EB 100%);
+    color: #ffffff;
+    font-size: 16px; font-weight: 800; letter-spacing: 0.04em;
+    border: none; border-radius: 16px;
     cursor: pointer;
     text-transform: uppercase;
     box-shadow:
-      0 8px 0 #001A99,
-      0 12px 28px rgba(204, 255, 0, 0.35);
+      0 12px 28px rgba(37, 99, 235, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transition: all 0.15s ease;
     text-align: center;
     font-family: inherit;
   }
-  .cta:hover { background: #D9FF33; }
-  .cta:active {
-    transform: translateY(4px);
-    box-shadow: 0 4px 0 #001A99, 0 6px 16px rgba(204, 255, 0, 0.3);
+  .cta-sub {
+    font-size: 11px; font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
   }
-  .cta:disabled {
-    opacity: 0.5; cursor: not-allowed;
-    box-shadow: 0 4px 0 #001A99;
-  }
+  .cta:hover { transform: translateY(-1px); }
+  .cta:active { transform: translateY(2px); }
+  .cta:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
   .cta-secondary {
-    background: transparent; color: var(--text);
-    border: 2px solid var(--border);
-    box-shadow: none; font-weight: 800;
+    background: transparent; color: var(--text-dim);
+    border: 1.5px solid var(--border);
+    box-shadow: none; font-weight: 700;
   }
-  .cta-secondary:hover { background: rgba(255, 255, 255, 0.08); }
+  .cta-secondary:hover { background: rgba(255, 255, 255, 0.05); }
+  .cta-content { display: flex; flex-direction: column; align-items: center; gap: 0; }
 
   /* ===== Form ===== */
   .form-title {
@@ -815,93 +921,81 @@
   <!-- ========== STEP 0: HERO (apresentação) ========== -->
   <section class="step active" id="step-hero">
     <div class="hero-typography">
-      <h1 class="hero-line">ABRA SEU</h1>
-      <h1 class="hero-line lime">PACOTE</h1>
-      <h1 class="hero-line">PREMIADO</h1>
-
-      <!-- Seta verde esquerda (hand-drawn) -->
-      <svg class="hero-arrow left" viewBox="0 0 100 100" fill="none" stroke="#CCFF00" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10,90 C 10,40 40,20 60,50 C 70,65 80,75 95,70" />
-        <path d="M80,55 L95,70 L85,85" />
-      </svg>
-
-      <!-- Seta verde direita -->
-      <svg class="hero-arrow right" viewBox="0 0 100 100" fill="none" stroke="#CCFF00" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M90,10 C 80,60 60,80 40,60 C 20,40 40,20 60,30 C 80,40 70,70 50,80" />
-        <path d="M65,75 L50,80 L55,65" />
-      </svg>
-
-      <!-- Badge "Pegue grátis" girando -->
-      <div class="hero-badge">
-        <svg class="hero-badge-text" viewBox="0 0 100 100">
-          <path id="circlePath" d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none" />
-          <text style="font-size: 11px; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;" fill="#000">
-            <textPath href="#circlePath" startOffset="0%">
-              PEGUE GRÁTIS · PEGUE GRÁTIS ·
-            </textPath>
-          </text>
-        </svg>
-        <svg class="hero-badge-arrow" viewBox="0 0 100 100" fill="none" stroke="#000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20,80 Q 40,50 30,30 T 80,20" />
-          <path d="M60,10 L80,20 L70,40" />
-        </svg>
-      </div>
+      <h1 class="hero-line small">Pacote Premiado</h1>
+      <h1 class="hero-line">ABRA</h1>
+      <h1 class="hero-line blue">E GANHE!</h1>
     </div>
 
     <p class="hero-sub">
-      Ganhe banca pra apostar e acesso ao grupo VIP do Dupla. Promoção exclusiva pré-Copa do Mundo. Todo mundo abre, todo mundo ganha.
+      Participe da campanha que vai <strong>premiar a galera</strong> antes da Copa do Mundo e descubra <strong>quais surpresas</strong> tu pode levar com apenas <strong>1 clique no pacote</strong>.
     </p>
 
-    <div class="prizes-preview">
-      <div class="prize-preview-card">
-        <div class="prize-preview-icon gold">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M9 4 L15 4 L17 8 L7 8 Z M7 8 C5 11 4 14 4 17 C4 20 7 21 12 21 C17 21 20 20 20 17 C20 14 19 11 17 8 Z"
-              fill="#1a1300" stroke="#1a1300" stroke-width="0.5" stroke-linejoin="round"/>
-            <text x="12" y="17" text-anchor="middle" fill="#FFD700" font-size="9" font-weight="900" font-family="Arial">$</text>
-          </svg>
+    <button class="cta" onclick="goToStep('intro')">
+      <div class="cta-content">
+        <span>ABRIR MEU PACOTE →</span>
+        <span class="cta-sub">100% Grátis</span>
+      </div>
+    </button>
+
+    <!-- Nova seção: Possíveis prêmios em slider -->
+    <div class="prizes-section">
+      <div class="prizes-eyebrow">O QUE VOCÊ PODE GANHAR</div>
+      <h2 class="prizes-title">Prêmios <span class="blue-text">Incríveis</span></h2>
+      <p class="prizes-desc">Confira o que você pode ganhar abrindo seu pacote</p>
+
+      <div class="prizes-slider" id="prizesSlider">
+        <!-- Card 1 -->
+        <div class="prize-slide">
+          <div class="prize-slide-header">
+            <svg class="prize-slide-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z"/>
+            </svg>
+            <div class="prize-slide-tag">PRÊMIOS PRINCIPAIS</div>
+          </div>
+          <ul class="prize-slide-list">
+            <li><span class="prize-slide-bullet">$</span><div><div class="prize-slide-name">Banca de R$ 50</div></div></li>
+            <li><span class="prize-slide-bullet">⭐</span><div><div class="prize-slide-name">Acesso VIP por 30 dias</div></div></li>
+            <li><span class="prize-slide-bullet">🎯</span><div><div class="prize-slide-name">Tips exclusivas dos especialistas</div></div></li>
+          </ul>
         </div>
-        <div>
-          <div class="prize-preview-name">R$ 50 de banca</div>
-          <div class="prize-preview-desc">Pra apostar com a gente</div>
+
+        <!-- Card 2 -->
+        <div class="prize-slide">
+          <div class="prize-slide-header">
+            <svg class="prize-slide-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L4 6 v6 c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10 V6 l-8-4 z"/>
+            </svg>
+            <div class="prize-slide-tag">PRÊMIOS ESPECIAIS</div>
+          </div>
+          <ul class="prize-slide-list">
+            <li><span class="prize-slide-bullet">👕</span><div><div class="prize-slide-name">Camisa exclusiva da Dupla</div></div></li>
+            <li><span class="prize-slide-bullet">🎟️</span><div><div class="prize-slide-name">Acompanhamento na Copa</div></div></li>
+            <li><span class="prize-slide-bullet">💼</span><div><div class="prize-slide-name">Mentoria com Mateus Caumo</div></div></li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="prize-slide">
+          <div class="prize-slide-header">
+            <svg class="prize-slide-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L13.09 8.26 L20 9 L15.45 14.14 L17 21 L12 17.27 L7 21 L8.55 14.14 L4 9 L10.91 8.26 Z M12 6 L11 10 L7 10 L10 12 L9 16 L12 14 L15 16 L14 12 L17 10 L13 10 Z"/>
+            </svg>
+            <div class="prize-slide-tag">PRÊMIOS RAROS</div>
+          </div>
+          <ul class="prize-slide-list">
+            <li><span class="prize-slide-bullet">📱</span><div><div class="prize-slide-name">iPhone (último modelo)</div></div></li>
+            <li><span class="prize-slide-bullet">💰</span><div><div class="prize-slide-name">Banca de R$ 5.000</div></div></li>
+            <li><span class="prize-slide-bullet">🏆</span><div><div class="prize-slide-name">Pacote VIP completo Copa</div></div></li>
+          </ul>
         </div>
       </div>
-      <div class="prize-preview-card">
-        <div class="prize-preview-icon purple">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 2 L14.5 8.5 L21.5 9 L16.2 13.7 L17.8 20.5 L12 17 L6.2 20.5 L7.8 13.7 L2.5 9 L9.5 8.5 Z"
-              fill="#ffffff" stroke="#ffffff" stroke-width="0.5" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <div class="prize-preview-name">Acesso VIP por 30 dias</div>
-          <div class="prize-preview-desc">Tips exclusivas + grupo fechado</div>
-        </div>
+
+      <div class="prizes-dots" id="prizesDots">
+        <span class="prizes-dot active"></span>
+        <span class="prizes-dot"></span>
+        <span class="prizes-dot"></span>
       </div>
     </div>
-
-    <div class="how-it-works">
-      <div class="how-title">Como funciona</div>
-      <div class="how-step">
-        <div class="how-step-num">1</div>
-        <div class="how-step-text">Cadastra rapidinho (30 segundos)</div>
-      </div>
-      <div class="how-step">
-        <div class="how-step-num">2</div>
-        <div class="how-step-text">Abre seu pacote e descobre os prêmios</div>
-      </div>
-      <div class="how-step">
-        <div class="how-step-num">3</div>
-        <div class="how-step-text">Resgata cadastrando em uma casa parceira</div>
-      </div>
-    </div>
-
-    <div class="free-badge">
-      <svg viewBox="0 0 24 24"><path d="M12 2 L4 6 v6 c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10 V6 l-8-4 z M10 17 L6 13 l1.4-1.4 L10 14.2 l6.6-6.6 L18 9 z"/></svg>
-      100% GRÁTIS · SEM PEGADINHA
-    </div>
-
-    <button class="cta" onclick="goToStep('intro')">Quero meu pacote 🎁</button>
   </section>
 
   <!-- ========== STEP 1: INTRO ========== -->
@@ -1322,6 +1416,17 @@
       alert(`Redirecionando pra ${name}...\n\nNa versão final, abre link de afiliação rastreado.`);
     };
   }
+
+  // Slider de prêmios — sincroniza dots com scroll
+  (() => {
+    const slider = document.getElementById('prizesSlider');
+    const dots = document.querySelectorAll('#prizesDots .prizes-dot');
+    if (!slider || !dots.length) return;
+    slider.addEventListener('scroll', () => {
+      const idx = Math.round(slider.scrollLeft / (slider.scrollWidth / dots.length));
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    });
+  })();
 
   // Máscara telefone BR
   document.getElementById('phone').addEventListener('input', (e) => {
