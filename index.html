@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a1628">
+<title>Pacote Premiado</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg: #0e3aa8;
+    --bg-2: #1e40af;
+    --bg-overlay: rgba(14, 58, 168, 0.75);
+    --primary: #00C853;
+    --primary-dark: #00963f;
+    --accent: #FFD700;
+    --accent-2: #FFA500;
+    --text: #ffffff;
+    --text-dim: #cbd5e1;
+    --text-mute: #94a3b8;
+    --card: rgba(8, 28, 84, 0.7);
+    --card-2: rgba(16, 40, 110, 0.85);
+    --border: rgba(255, 255, 255, 0.12);
+    --danger: #ef4444;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+
+  /* ===== Background com imagem da Copa (escurecido) ===== */
+  /* Coloque arena/bg-copa.jpg pra usar a imagem real. Sem ela, fica o azul escuro. */
+  body {
+    background:
+      linear-gradient(180deg, rgba(4, 18, 60, 0.94) 0%, rgba(2, 10, 40, 0.97) 100%),
+      url('bg-copa.jpg') center / cover no-repeat fixed,
+      radial-gradient(circle at 50% 30%, #0a1f5e 0%, #051040 60%, #020a25 100%);
+    background-color: #051040;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(0, 200, 83, 0.04) 0%, transparent 40%);
+    pointer-events: none; z-index: 0;
+  }
+  .container { position: relative; z-index: 1; }
+
+  .container { max-width: 480px; margin: 0 auto; padding: 0 20px; }
+
+  /* ===== Header ===== */
+  .top-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 32px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 800; font-size: 15px;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .brand:hover { opacity: 0.7; }
+  .brand-emoji { font-size: 20px; }
+  .brand-logo { width: 28px; height: 28px; flex-shrink: 0; }
+  .age-badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 11px; font-weight: 800;
+    padding: 5px 11px; border-radius: 6px;
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ===== Steps ===== */
+  .step { display: none; animation: fadeIn 0.4s ease; }
+  .step.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== HERO (apresentação da campanha) ===== */
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    color: var(--accent);
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: 38px; font-weight: 900; line-height: 1;
+    letter-spacing: -0.02em; margin-bottom: 14px;
+  }
+  .hero-title .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 15px; color: var(--text-dim);
+    line-height: 1.6; margin-bottom: 28px;
+  }
+
+  .prizes-preview {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .prize-preview-card {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+  }
+  .prize-preview-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .prize-preview-icon.gold {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  }
+  .prize-preview-icon.purple {
+    background: linear-gradient(135deg, #a855f7, #6d28d9);
+  }
+  .prize-preview-icon svg { width: 24px; height: 24px; }
+  .prize-preview-name {
+    font-weight: 800; font-size: 15px; margin-bottom: 2px;
+  }
+  .prize-preview-desc {
+    font-size: 12px; color: var(--text-dim);
+  }
+
+  .how-it-works {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 22px;
+    backdrop-filter: blur(10px);
+  }
+  .how-title {
+    font-size: 11px; font-weight: 700;
+    color: var(--text-mute);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .how-step {
+    display: flex; gap: 12px; align-items: center;
+    padding: 6px 0;
+  }
+  .how-step-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(0, 200, 83, 0.15);
+    color: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 12px; flex-shrink: 0;
+    border: 1px solid rgba(0, 200, 83, 0.3);
+  }
+  .how-step-text {
+    font-size: 14px; color: var(--text); line-height: 1.4;
+  }
+
+  .free-badge {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; padding: 12px;
+    background: rgba(0, 200, 83, 0.12);
+    border: 1px solid rgba(0, 200, 83, 0.4);
+    border-radius: 10px;
+    color: var(--primary);
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+  .free-badge svg {
+    width: 18px; height: 18px;
+    fill: var(--primary);
+  }
+
+  /* ===== INTRO ===== */
+  .pack-stage {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 30px 0 20px;
+  }
+  .pack-glow {
+    position: relative;
+    filter: drop-shadow(0 0 60px rgba(255, 215, 0, 0.45)) drop-shadow(0 30px 50px rgba(0, 0, 0, 0.5));
+  }
+  .pack {
+    width: 240px; height: 320px; border-radius: 18px;
+    background: linear-gradient(160deg, #FFD93D 0%, #FFA500 50%, #FF7A00 100%);
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    animation: floatPack 4s ease-in-out infinite;
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.15),
+      inset 4px 0 8px rgba(255, 255, 255, 0.2),
+      inset -4px 0 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+  }
+  .pack:hover { transform: scale(1.03); }
+  .pack::before {
+    content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    transform: translateY(-30px);
+  }
+  /* Linhas radiais brancas atrás do gift */
+  .pack-rays {
+    position: absolute; top: 50%; left: 50%; width: 200px; height: 200px;
+    transform: translate(-50%, -64%);
+    background:
+      conic-gradient(from 0deg,
+        rgba(255,255,255,0.15) 0deg, transparent 8deg,
+        rgba(255,255,255,0.15) 30deg, transparent 38deg,
+        rgba(255,255,255,0.15) 60deg, transparent 68deg,
+        rgba(255,255,255,0.15) 90deg, transparent 98deg,
+        rgba(255,255,255,0.15) 120deg, transparent 128deg,
+        rgba(255,255,255,0.15) 150deg, transparent 158deg,
+        rgba(255,255,255,0.15) 180deg, transparent 188deg,
+        rgba(255,255,255,0.15) 210deg, transparent 218deg,
+        rgba(255,255,255,0.15) 240deg, transparent 248deg,
+        rgba(255,255,255,0.15) 270deg, transparent 278deg,
+        rgba(255,255,255,0.15) 300deg, transparent 308deg,
+        rgba(255,255,255,0.15) 330deg, transparent 338deg);
+    animation: spin 30s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: translate(-50%, -64%) rotate(360deg); }
+  }
+
+  .pack-content {
+    position: relative;
+    height: 100%;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 50px 20px 40px;
+    color: #1a1300;
+  }
+  .pack-gift {
+    width: 56px; height: 56px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  }
+  .pack-title {
+    font-size: 26px; font-weight: 900; line-height: 1;
+    text-transform: uppercase; letter-spacing: -0.01em;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  .pack-subtitle {
+    font-size: 11px; font-weight: 700;
+    margin-top: 14px; letter-spacing: 0.3em;
+    opacity: 0.7;
+  }
+  .pack-dots {
+    position: absolute; bottom: 22px; left: 0; right: 0;
+    display: flex; justify-content: center; gap: 6px;
+  }
+  .pack-dots span {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes floatPack {
+    0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+    50% { transform: translateY(-12px) rotate(1.5deg); }
+  }
+
+  .pack-hint {
+    margin-top: 18px;
+    color: var(--text-mute);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ===== CTA ===== */
+  .cta-wrap { padding: 24px 0 0; }
+  .cta {
+    display: block; width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #ffffff;
+    font-size: 17px; font-weight: 800; letter-spacing: 0.01em;
+    border: none; border-radius: 16px;
+    cursor: pointer;
+    box-shadow:
+      0 12px 28px rgba(0, 200, 83, 0.45),
+      inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+    text-align: center;
+    font-family: inherit;
+  }
+  .cta:active { transform: translateY(2px); box-shadow: 0 6px 16px rgba(0, 200, 83, 0.4); }
+  .cta:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+  .cta-secondary {
+    background: transparent; color: var(--text-dim);
+    border: 1.5px solid var(--border);
+    box-shadow: none; font-weight: 700;
+  }
+
+  /* ===== Form ===== */
+  .form-title {
+    font-size: 30px; font-weight: 900; line-height: 1.1;
+    margin-bottom: 8px; letter-spacing: -0.02em;
+  }
+  .form-sub {
+    color: var(--text-dim); font-size: 15px; margin-bottom: 28px;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-label {
+    display: block; font-size: 11px; font-weight: 700;
+    color: var(--text-mute); margin-bottom: 8px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%; padding: 16px;
+    background: var(--card); color: var(--text);
+    border: 1.5px solid var(--border); border-radius: 12px;
+    font-size: 16px; font-family: inherit;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.4); }
+  .form-input:focus {
+    outline: none; border-color: var(--primary);
+    background: var(--card-2);
+  }
+  .form-checkbox {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin: 24px 0; font-size: 13px; color: var(--text-dim);
+  }
+  .form-checkbox input {
+    width: 18px; height: 18px; accent-color: var(--primary);
+    margin-top: 2px; cursor: pointer; flex-shrink: 0;
+  }
+  .form-checkbox a { color: var(--primary); }
+
+  /* ===== Opening — Corte + Glow + Confete ===== */
+  .opening-stage {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+    padding: 60px 0; gap: 24px;
+    min-height: 480px;
+    position: relative;
+    overflow: visible;
+  }
+
+  /* Pacote sendo cortado */
+  .pack-cutting {
+    width: 240px; height: 320px;
+    position: relative;
+    filter: drop-shadow(0 0 60px rgba(255, 215, 0, 0.45));
+    z-index: 2;
+  }
+  .pack-cut-half {
+    position: absolute; left: 0; right: 0; height: 50%;
+    background: linear-gradient(160deg, #FFD93D 0%, #FFA500 50%, #FF7A00 100%);
+    overflow: hidden;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,0.4),
+      inset 0 -2px 0 rgba(0,0,0,0.15),
+      0 8px 16px rgba(0,0,0,0.3);
+  }
+  .pack-cut-half.top {
+    top: 0; border-radius: 18px 18px 2px 2px;
+    animation: slideTop 1.6s cubic-bezier(0.5, 0, 0.75, 0) 0.6s forwards;
+  }
+  .pack-cut-half.bottom {
+    bottom: 0; border-radius: 2px 2px 18px 18px;
+    animation: slideBottom 1.6s cubic-bezier(0.5, 0, 0.75, 0) 0.6s forwards;
+  }
+  @keyframes slideTop {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    60% { transform: translateY(-180%) scale(0.85); opacity: 0.7; }
+    100% { transform: translateY(-300%) scale(0.6); opacity: 0; }
+  }
+  @keyframes slideBottom {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    60% { transform: translateY(180%) scale(0.85); opacity: 0.7; }
+    100% { transform: translateY(300%) scale(0.6); opacity: 0; }
+  }
+
+  /* Linha de corte que atravessa o pacote */
+  .cut-line {
+    position: absolute; top: 50%; left: -20px; right: -20px;
+    height: 4px; transform: translateY(-50%);
+    background: linear-gradient(90deg, transparent 0%, #fff 30%, #FFD700 50%, #fff 70%, transparent 100%);
+    box-shadow:
+      0 0 20px #FFD700,
+      0 0 40px #FFD700,
+      0 0 80px rgba(255, 215, 0, 0.6);
+    transform-origin: center;
+    animation: cutLine 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 3;
+    opacity: 0;
+  }
+  @keyframes cutLine {
+    0% { transform: translateY(-50%) scaleX(0); opacity: 0; }
+    20% { transform: translateY(-50%) scaleX(0.3); opacity: 1; }
+    50% { transform: translateY(-50%) scaleX(1.3); opacity: 1; }
+    80% { transform: translateY(-50%) scaleX(1); opacity: 0.8; }
+    100% { transform: translateY(-50%) scaleX(0); opacity: 0; }
+  }
+
+  /* Glow radial explodindo */
+  .glow-explosion {
+    position: absolute; top: 50%; left: 50%;
+    width: 100px; height: 100px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.9) 0%, rgba(255, 165, 0, 0.5) 30%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: glowExpand 1.5s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+    opacity: 0;
+    z-index: 1;
+  }
+  @keyframes glowExpand {
+    0% { opacity: 0; width: 100px; height: 100px; }
+    20% { opacity: 1; }
+    100% { opacity: 0; width: 800px; height: 800px; }
+  }
+
+  /* Confete container */
+  .confetti-container {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .confetti {
+    position: absolute;
+    width: 8px; height: 14px;
+    top: -20px;
+    opacity: 0;
+    animation: confettiFall 2.5s ease-in 1.2s forwards;
+  }
+  @keyframes confettiFall {
+    0% { opacity: 0; transform: translateY(0) rotate(0deg); }
+    10% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(600px) rotate(720deg); }
+  }
+
+  /* Texto */
+  .opening-text {
+    font-size: 18px; font-weight: 800; color: var(--accent);
+    letter-spacing: 0.05em;
+    animation: pulseText 1s ease infinite;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    z-index: 2;
+  }
+  @keyframes pulseText {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  /* ===== Reveal ===== */
+  .reveal-stage {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 16px 0;
+  }
+  .stickers-row {
+    display: flex; gap: 8px; margin-bottom: 28px;
+  }
+  .sticker-dot {
+    width: 32px; height: 5px; border-radius: 3px;
+    background: var(--border); transition: all 0.3s ease;
+  }
+  .sticker-dot.active {
+    background: var(--accent); box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  }
+
+  .sticker-card {
+    width: 280px; height: 380px;
+    border-radius: 22px;
+    position: relative; overflow: hidden;
+    box-shadow:
+      0 30px 60px rgba(0, 0, 0, 0.5),
+      0 0 50px rgba(255, 215, 0, 0.2),
+      inset 0 2px 0 rgba(255, 255, 255, 0.15);
+    background: linear-gradient(160deg, #1e3656 0%, #0a1628 100%);
+    border: 3px solid var(--accent);
+    display: flex; flex-direction: column;
+    padding: 28px;
+    animation: stickerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .sticker-card.gold {
+    background: linear-gradient(160deg, #FFD93D 0%, #FFA500 100%);
+    border-color: #fff; color: #1a1300;
+  }
+  .sticker-card.green {
+    background: linear-gradient(160deg, #00C853 0%, #00963f 100%);
+    border-color: #fff; color: #fff;
+  }
+  .sticker-card.purple {
+    background: linear-gradient(160deg, #a855f7 0%, #6d28d9 100%);
+    border-color: #fff; color: #fff;
+  }
+
+  @keyframes stickerIn {
+    from { opacity: 0; transform: scale(0.6) rotate(-12deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
+  }
+
+  .sticker-shine {
+    position: absolute; inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+    animation: shimmer 3s ease infinite; pointer-events: none;
+  }
+  @keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+
+  .sticker-num {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.2em;
+    text-transform: uppercase; opacity: 0.7; margin-bottom: 6px;
+  }
+  .sticker-headline {
+    font-size: 32px; font-weight: 900; line-height: 1.05;
+    margin-bottom: 16px; letter-spacing: -0.02em;
+  }
+  .sticker-icon {
+    font-size: 80px; text-align: center; margin: auto 0;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sticker-icon svg { max-width: 100%; height: auto; }
+  .sticker-detail {
+    font-size: 14px; opacity: 0.85; line-height: 1.4;
+    text-align: center; margin-top: auto;
+  }
+
+  /* ===== Claim ===== */
+  .claim-title {
+    font-size: 32px; font-weight: 900; line-height: 1.05;
+    margin-bottom: 8px; letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .claim-sub {
+    color: var(--text-dim); font-size: 15px; margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .prize-list {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0; margin-bottom: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+  }
+  .prize-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px;
+  }
+  .prize-item + .prize-item {
+    border-top: 1px solid var(--border);
+  }
+  .prize-icon {
+    width: 44px; height: 44px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  }
+  .prize-icon.green {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  }
+  .prize-icon svg {
+    width: 24px; height: 24px;
+  }
+  .prize-info-name {
+    font-weight: 800; font-size: 15px; margin-bottom: 2px;
+  }
+  .prize-info-desc {
+    font-size: 12px; color: var(--text-dim);
+  }
+
+  .steps-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px 22px; margin-bottom: 26px;
+    backdrop-filter: blur(12px);
+  }
+  .steps-title {
+    font-size: 11px; font-weight: 700;
+    color: var(--text-mute); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  .step-row {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 8px 0;
+  }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 12px; flex-shrink: 0;
+  }
+  .step-text {
+    font-size: 14px; color: var(--text); line-height: 1.4;
+  }
+  .step-text strong { color: var(--text); font-weight: 700; }
+
+  .casas-title {
+    text-align: center; font-size: 11px; color: var(--text-mute);
+    text-transform: uppercase; letter-spacing: 0.2em;
+    margin-bottom: 14px; font-weight: 700;
+  }
+  .casas-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 8px; margin-bottom: 22px;
+  }
+  .casa-btn {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 0;
+    height: 80px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    overflow: hidden;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+  .casa-btn:hover, .casa-btn.selected {
+    border-color: var(--primary);
+    background: rgba(0, 200, 83, 0.08);
+  }
+  .casa-btn.selected {
+    box-shadow: 0 0 0 2px rgba(0, 200, 83, 0.3);
+  }
+  .casa-btn .casa-logo {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 100%; padding: 8px;
+  }
+
+  /* Logos das casas estilizadas com texto */
+  .logo-betmgm {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-betmgm svg { width: 26px; height: 26px; }
+  .logo-betmgm .text {
+    color: #C9A572;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+  .logo-esportiva {
+    color: #ffffff;
+    font-weight: 900; font-style: italic;
+    font-size: 13px; letter-spacing: -0.01em;
+  }
+  .logo-esportiva .accent { color: #F39C12; }
+  .logo-novibet {
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 14px; letter-spacing: 0.02em;
+    text-transform: lowercase;
+  }
+  .logo-novibet .accent { color: #2563EB; }
+  .logo-sportingbet {
+    color: #ffffff;
+    font-weight: 900; font-style: italic;
+    font-size: 13px; letter-spacing: -0.02em;
+    text-transform: lowercase;
+  }
+  .logo-sportingbet .accent { color: #ef4444; }
+
+  .timer-warn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px;
+    text-align: center; color: var(--text-dim); font-size: 13px;
+    margin-bottom: 18px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .timer-warn svg {
+    width: 14px; height: 14px;
+    stroke: var(--text-mute); fill: none;
+  }
+
+  /* ===== COMPLIANCE FOOTER ===== */
+  .footer {
+    margin-top: 40px; padding: 28px 0 32px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .compliance-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    font-size: 12px; font-weight: 800;
+    color: var(--text); letter-spacing: 0.1em;
+    backdrop-filter: blur(8px);
+  }
+  .compliance-badge svg {
+    width: 16px; height: 16px;
+    fill: var(--primary);
+  }
+  .compliance-text {
+    font-size: 13px; line-height: 1.6;
+    color: var(--text-dim); text-align: center;
+    max-width: 380px;
+  }
+  .compliance-phone {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 13px; color: var(--text);
+    width: 100%; max-width: 380px; justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+  .compliance-phone strong {
+    color: var(--text); font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .compliance-phone svg {
+    width: 16px; height: 16px;
+    stroke: var(--text-dim); fill: none;
+  }
+  .footer-links {
+    display: flex; gap: 8px; align-items: center;
+    font-size: 12px; color: var(--text-mute);
+  }
+  .footer-links a {
+    color: var(--text-mute); text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .footer-links a:hover { color: var(--text-dim); }
+  .footer-links span { color: var(--border); }
+  .footer-cnpj {
+    font-size: 11px; color: var(--text-mute);
+    letter-spacing: 0.02em;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 380px) {
+    .pack { width: 200px; height: 270px; }
+    .pack-title { font-size: 22px; }
+    .sticker-card { width: 260px; height: 360px; padding: 24px; }
+    .form-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="top-header">
+    <a href="#" class="brand" onclick="event.preventDefault(); goToStep('hero');">
+      <svg class="brand-logo" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFD700"/>
+            <stop offset="100%" stop-color="#FFA500"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="32" height="32" rx="8" fill="url(#logoGrad)"/>
+        <path d="M18 9 L24 14 L24 24 L18 27 L12 24 L12 14 Z" fill="#0a1628" opacity="0.9"/>
+        <text x="18" y="22" text-anchor="middle" fill="#FFD700" font-weight="900" font-size="11" font-family="Arial">PP</text>
+      </svg>
+      <span>Pacote Premiado</span>
+    </a>
+    <div class="age-badge">+18</div>
+  </header>
+
+  <!-- ========== STEP 0: HERO (apresentação) ========== -->
+  <section class="step active" id="step-hero">
+    <div class="hero-eyebrow">
+      🏆 EDIÇÃO PRÉ-COPA 2026
+    </div>
+
+    <h1 class="hero-title">
+      Abra seu<br>
+      <span class="highlight">Pacote Premiado</span>
+    </h1>
+
+    <p class="hero-sub">
+      Ganhe banca pra apostar e acesso ao grupo VIP do Dupla. Promoção exclusiva pré-Copa do Mundo. Todo mundo abre, todo mundo ganha.
+    </p>
+
+    <div class="prizes-preview">
+      <div class="prize-preview-card">
+        <div class="prize-preview-icon gold">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M9 4 L15 4 L17 8 L7 8 Z M7 8 C5 11 4 14 4 17 C4 20 7 21 12 21 C17 21 20 20 20 17 C20 14 19 11 17 8 Z"
+              fill="#1a1300" stroke="#1a1300" stroke-width="0.5" stroke-linejoin="round"/>
+            <text x="12" y="17" text-anchor="middle" fill="#FFD700" font-size="9" font-weight="900" font-family="Arial">$</text>
+          </svg>
+        </div>
+        <div>
+          <div class="prize-preview-name">R$ 50 de banca</div>
+          <div class="prize-preview-desc">Pra apostar com a gente</div>
+        </div>
+      </div>
+      <div class="prize-preview-card">
+        <div class="prize-preview-icon purple">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2 L14.5 8.5 L21.5 9 L16.2 13.7 L17.8 20.5 L12 17 L6.2 20.5 L7.8 13.7 L2.5 9 L9.5 8.5 Z"
+              fill="#ffffff" stroke="#ffffff" stroke-width="0.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="prize-preview-name">Acesso VIP por 30 dias</div>
+          <div class="prize-preview-desc">Tips exclusivas + grupo fechado</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-it-works">
+      <div class="how-title">Como funciona</div>
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <div class="how-step-text">Cadastra rapidinho (30 segundos)</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <div class="how-step-text">Abre seu pacote e descobre os prêmios</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <div class="how-step-text">Resgata cadastrando em uma casa parceira</div>
+      </div>
+    </div>
+
+    <div class="free-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 2 L4 6 v6 c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10 V6 l-8-4 z M10 17 L6 13 l1.4-1.4 L10 14.2 l6.6-6.6 L18 9 z"/></svg>
+      100% GRÁTIS · SEM PEGADINHA
+    </div>
+
+    <button class="cta" onclick="goToStep('intro')">Quero meu pacote 🎁</button>
+  </section>
+
+  <!-- ========== STEP 1: INTRO ========== -->
+  <section class="step" id="step-intro">
+
+    <div class="pack-stage">
+      <div class="pack-glow">
+        <div class="pack" onclick="goToStep('form')">
+          <div class="pack-rays"></div>
+          <div class="pack-content">
+            <div class="pack-gift">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect x="6" y="22" width="44" height="28" rx="3" fill="#1a1300"/>
+                <rect x="6" y="22" width="44" height="6" rx="2" fill="#0a0900"/>
+                <rect x="25" y="22" width="6" height="28" fill="#FF6B00"/>
+                <rect x="25" y="14" width="6" height="10" fill="#FF6B00"/>
+                <ellipse cx="20" cy="14" rx="6" ry="5" fill="#FF6B00"/>
+                <ellipse cx="36" cy="14" rx="6" ry="5" fill="#FF6B00"/>
+              </svg>
+            </div>
+            <div class="pack-title">PACOTÃO<br>PREMIADO</div>
+            <div class="pack-subtitle">DUPLA</div>
+            <div class="pack-dots">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pack-hint">Toque para abrir</div>
+    </div>
+
+    <div class="cta-wrap">
+      <button class="cta" onclick="goToStep('form')">Quero meu pacote</button>
+    </div>
+  </section>
+
+  <!-- ========== STEP 2: FORM ========== -->
+  <section class="step" id="step-form">
+    <h2 class="form-title">Vamo lá!</h2>
+    <p class="form-sub">Só preciso de uns dados pra liberar teu pacote.</p>
+
+    <form id="lead-form" onsubmit="return submitForm(event)">
+      <div class="form-group">
+        <label class="form-label" for="name">Nome</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Seu nome" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="phone">WhatsApp</label>
+        <input class="form-input" type="tel" id="phone" name="phone" placeholder="(11) 99999-9999" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="seu@email.com" required>
+      </div>
+
+      <div class="form-checkbox">
+        <input type="checkbox" id="age-check" required>
+        <label for="age-check">Confirmo que tenho 18 anos ou mais e li os <a href="#">Termos de Uso</a>.</label>
+      </div>
+
+      <button class="cta" type="submit">Abrir meu pacote 🎁</button>
+      <button class="cta cta-secondary" type="button" onclick="goToStep('intro')" style="margin-top:10px;">Voltar</button>
+    </form>
+  </section>
+
+  <!-- ========== STEP 3: OPENING ========== -->
+  <section class="step" id="step-opening">
+    <div class="opening-stage">
+      <!-- Confete cobrindo a tela -->
+      <div class="confetti-container" id="confetti-container"></div>
+
+      <!-- Glow radial -->
+      <div class="glow-explosion"></div>
+
+      <!-- Pacote sendo cortado -->
+      <div class="pack-cutting">
+        <div class="pack-cut-half top"></div>
+        <div class="pack-cut-half bottom"></div>
+        <div class="cut-line"></div>
+      </div>
+
+      <div class="opening-text">Abrindo seu pacote...</div>
+    </div>
+  </section>
+
+  <!-- ========== STEP 4: REVEAL ========== -->
+  <section class="step" id="step-reveal">
+    <div class="reveal-stage">
+      <div class="stickers-row" id="dots">
+        <div class="sticker-dot active"></div>
+        <div class="sticker-dot"></div>
+        <div class="sticker-dot"></div>
+      </div>
+
+      <div id="sticker-host"></div>
+
+      <div class="cta-wrap" style="width:100%;">
+        <button class="cta" id="next-sticker" onclick="nextSticker()">Próxima figurinha →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STEP 5: CLAIM ========== -->
+  <section class="step" id="step-claim">
+    <h2 class="claim-title">Você ganhou!</h2>
+    <p class="claim-sub">Falta só 1 passo pra resgatar.</p>
+
+    <div class="prize-list">
+      <div class="prize-item">
+        <div class="prize-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 4 L15 4 L17 8 L7 8 Z" fill="#1a1300" stroke="#1a1300" stroke-width="0.5" stroke-linejoin="round"/>
+            <path d="M7 8 C5 11 4 14 4 17 C4 20 7 21 12 21 C17 21 20 20 20 17 C20 14 19 11 17 8 Z" fill="#1a1300" stroke="#1a1300" stroke-width="0.5" stroke-linejoin="round"/>
+            <text x="12" y="17" text-anchor="middle" fill="#FFD700" font-size="9" font-weight="900" font-family="Arial">$</text>
+          </svg>
+        </div>
+        <div>
+          <div class="prize-info-name">R$ 50 de banca</div>
+          <div class="prize-info-desc">Liberado após primeiro depósito</div>
+        </div>
+      </div>
+      <div class="prize-item">
+        <div class="prize-icon green">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 L14.5 8.5 L21.5 9 L16.2 13.7 L17.8 20.5 L12 17 L6.2 20.5 L7.8 13.7 L2.5 9 L9.5 8.5 Z"
+              fill="#ffffff" stroke="#ffffff" stroke-width="0.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="prize-info-name">Acesso VIP por 30 dias</div>
+          <div class="prize-info-desc">Tips exclusivas + grupo fechado</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <div class="steps-title">Como resgatar</div>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text">Escolhe uma das casas parceiras (precisa ser uma onde você ainda <strong>não tem cadastro</strong>)</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text">Faz cadastro completo + primeiro depósito</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text">Volta aqui, manda o print, libera os prêmios em até 24h</div>
+      </div>
+    </div>
+
+    <div class="casas-title">Escolha a casa parceira</div>
+    <div class="casas-grid">
+      <button class="casa-btn" data-casa="betmgm" onclick="selectCasa(this, 'BetMGM')">
+        <div class="casa-logo">
+          <div class="logo-betmgm">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3 C7 3 4 6 4 11 C4 15 6 18 9 19 L9 17 C7 16 6 14 6 11 C6 8 8 6 11 6 L11 8 L13 8 L13 6 C16 6 18 8 18 11 C18 14 17 16 15 17 L15 19 C18 18 20 15 20 11 C20 6 17 3 12 3 Z M10 9 C9 9 9 10 9 11 C9 12 10 13 11 13 L11 19 L13 19 L13 13 C14 13 15 12 15 11 C15 10 15 9 14 9 Z"
+                fill="#C9A572"/>
+            </svg>
+            <span class="text">BetMGM</span>
+          </div>
+        </div>
+      </button>
+      <button class="casa-btn" data-casa="esportiva" onclick="selectCasa(this, 'EsportivaBet')">
+        <div class="casa-logo">
+          <div class="logo-esportiva">esportiva<span class="accent">.</span>bet</div>
+        </div>
+      </button>
+      <button class="casa-btn" data-casa="novibet" onclick="selectCasa(this, 'Novibet')">
+        <div class="casa-logo">
+          <div class="logo-novibet">novi<span class="accent">bet</span></div>
+        </div>
+      </button>
+      <button class="casa-btn" data-casa="sportingbet" onclick="selectCasa(this, 'Sportingbet')">
+        <div class="casa-logo">
+          <div class="logo-sportingbet">sportingbet<span class="accent">,</span></div>
+        </div>
+      </button>
+    </div>
+
+    <div class="timer-warn">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7 L12 12 L15 14"/>
+      </svg>
+      Resgate em até 7 dias
+    </div>
+
+    <button class="cta" id="continue-btn" disabled>Selecione uma casa parceira</button>
+  </section>
+
+  <!-- ========== FOOTER COMPLIANCE ========== -->
+  <footer class="footer">
+    <div class="compliance-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg>
+      JOGO RESPONSÁVEL
+    </div>
+
+    <p class="compliance-text">
+      Aposta esportiva é entretenimento, não fonte de renda. Aposte com responsabilidade.
+    </p>
+
+    <div class="compliance-phone">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+      Em caso de dependência, ligue <strong>0800 026 1818</strong>
+    </div>
+
+    <div class="footer-links">
+      <a href="#">Termos de Uso</a>
+      <span>·</span>
+      <a href="#">Política de Privacidade</a>
+    </div>
+
+    <div class="footer-cnpj">CNPJ: 36.213.131/0001-02</div>
+  </footer>
+
+</div>
+
+<script>
+  const stickers = [
+    {
+      class: 'gold',
+      num: 'FIGURINHA 01 / 03',
+      title: 'R$ 50 DE BANCA',
+      icon: `
+        <svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bill1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3ba558"/>
+              <stop offset="100%" stop-color="#1f7236"/>
+            </linearGradient>
+            <linearGradient id="bill2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4ec06b"/>
+              <stop offset="100%" stop-color="#2a8543"/>
+            </linearGradient>
+            <linearGradient id="bill3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#5fd07c"/>
+              <stop offset="100%" stop-color="#34a651"/>
+            </linearGradient>
+            <filter id="shadow1" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+            </filter>
+          </defs>
+          <!-- Nota 3 (atrás esquerda) -->
+          <g transform="rotate(-14 80 60)" filter="url(#shadow1)">
+            <rect x="20" y="25" width="120" height="70" rx="6" fill="url(#bill1)" stroke="#1a5e2e" stroke-width="1"/>
+            <rect x="28" y="33" width="104" height="54" rx="3" fill="none" stroke="#1a5e2e" stroke-width="1" opacity="0.4"/>
+          </g>
+          <!-- Nota 2 (atrás direita) -->
+          <g transform="rotate(10 80 60)" filter="url(#shadow1)">
+            <rect x="20" y="25" width="120" height="70" rx="6" fill="url(#bill2)" stroke="#1f7236" stroke-width="1"/>
+            <rect x="28" y="33" width="104" height="54" rx="3" fill="none" stroke="#1f7236" stroke-width="1" opacity="0.4"/>
+          </g>
+          <!-- Nota 1 (frente, principal) -->
+          <g filter="url(#shadow1)">
+            <rect x="20" y="25" width="120" height="70" rx="6" fill="url(#bill3)" stroke="#1f7236" stroke-width="1.5"/>
+            <rect x="28" y="33" width="104" height="54" rx="3" fill="none" stroke="#fff" stroke-width="1" opacity="0.4"/>
+            <circle cx="80" cy="60" r="20" fill="#fff" opacity="0.15"/>
+            <text x="80" y="58" text-anchor="middle" fill="#fff" font-weight="900" font-size="11" font-family="Arial" letter-spacing="1">R$</text>
+            <text x="80" y="74" text-anchor="middle" fill="#fff" font-weight="900" font-size="20" font-family="Arial">50</text>
+            <circle cx="34" cy="39" r="2" fill="#fff" opacity="0.5"/>
+            <circle cx="126" cy="39" r="2" fill="#fff" opacity="0.5"/>
+            <circle cx="34" cy="81" r="2" fill="#fff" opacity="0.5"/>
+            <circle cx="126" cy="81" r="2" fill="#fff" opacity="0.5"/>
+          </g>
+        </svg>`,
+      detail: 'Cinquenta reais de banca pra começar a apostar com a gente.'
+    },
+    {
+      class: 'purple',
+      num: 'FIGURINHA 02 / 03',
+      title: 'ACESSO VIP',
+      icon: `
+        <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="crown" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFD700"/>
+              <stop offset="100%" stop-color="#FFA500"/>
+            </linearGradient>
+            <filter id="shadow2" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+            </filter>
+          </defs>
+          <!-- Coroa -->
+          <g filter="url(#shadow2)">
+            <path d="M20 70 L25 35 L42 55 L60 25 L78 55 L95 35 L100 70 Z"
+                  fill="url(#crown)" stroke="#B8860B" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect x="20" y="70" width="80" height="14" rx="2" fill="url(#crown)" stroke="#B8860B" stroke-width="1.5"/>
+            <!-- Joias -->
+            <circle cx="25" cy="35" r="3.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="0.5"/>
+            <circle cx="60" cy="25" r="4" fill="#3b82f6" stroke="#1e3a8a" stroke-width="0.5"/>
+            <circle cx="95" cy="35" r="3.5" fill="#22c55e" stroke="#14532d" stroke-width="0.5"/>
+            <!-- Joia central na base -->
+            <rect x="55" y="74" width="10" height="6" rx="1" fill="#ef4444" stroke="#7f1d1d" stroke-width="0.5"/>
+            <!-- Brilhos -->
+            <circle cx="36" cy="60" r="1.5" fill="#fff" opacity="0.7"/>
+            <circle cx="78" cy="62" r="1.5" fill="#fff" opacity="0.7"/>
+          </g>
+        </svg>`,
+      detail: '30 dias de tips exclusivas no grupo fechado do Dupla.'
+    },
+    {
+      class: '',
+      num: 'FIGURINHA 03 / 03',
+      title: 'FALTA 1 PASSO',
+      icon: `
+        <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="targetGrad">
+              <stop offset="0%" stop-color="#FFD700"/>
+              <stop offset="100%" stop-color="#FFA500"/>
+            </radialGradient>
+            <filter id="shadow3" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+            </filter>
+          </defs>
+          <g filter="url(#shadow3)">
+            <!-- Anéis do alvo -->
+            <circle cx="60" cy="60" r="50" fill="#fff" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="60" cy="60" r="40" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+            <circle cx="60" cy="60" r="30" fill="#fff" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="60" cy="60" r="20" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+            <circle cx="60" cy="60" r="10" fill="url(#targetGrad)" stroke="#1e293b" stroke-width="2"/>
+            <!-- Flecha cravada no centro -->
+            <line x1="60" y1="60" x2="100" y2="20" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+            <line x1="60" y1="60" x2="100" y2="20" stroke="#FFD700" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Penas da flecha -->
+            <path d="M95 18 L102 13 L100 22 Z" fill="#dc2626" stroke="#1e293b" stroke-width="1"/>
+            <path d="M97 25 L104 20 L102 29 Z" fill="#dc2626" stroke="#1e293b" stroke-width="1"/>
+          </g>
+        </svg>`,
+      detail: 'Pra resgatar, é só fazer 1 cadastro numa casa parceira.'
+    }
+  ];
+
+  let currentSticker = 0;
+  let selectedCasa = null;
+
+  function goToStep(stepId) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + stepId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Gera confete dinamicamente
+  function spawnConfetti() {
+    const container = document.getElementById('confetti-container');
+    if (!container) return;
+    container.innerHTML = '';
+    const colors = ['#FFD700', '#FFA500', '#00C853', '#a855f7', '#ef4444', '#3b82f6', '#fff'];
+    const count = 60;
+    for (let i = 0; i < count; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + '%';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDelay = (1.2 + Math.random() * 0.8) + 's';
+      c.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+      // Variação de rotação inicial e escala
+      const rotate = Math.random() * 360;
+      const scale = 0.6 + Math.random() * 0.8;
+      c.style.transform = `rotate(${rotate}deg) scale(${scale})`;
+      // Algumas peças mais largas (papel picado)
+      if (Math.random() > 0.5) {
+        c.style.width = (4 + Math.random() * 6) + 'px';
+        c.style.height = (10 + Math.random() * 8) + 'px';
+        c.style.borderRadius = '2px';
+      } else {
+        c.style.width = '8px';
+        c.style.height = '8px';
+        c.style.borderRadius = '50%';
+      }
+      container.appendChild(c);
+    }
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    // TODO: enviar dados pro backend (POST /api/leads)
+    const data = Object.fromEntries(new FormData(e.target));
+    console.log('Lead capturado:', data);
+    goToStep('opening');
+    spawnConfetti();
+    setTimeout(() => {
+      goToStep('reveal');
+      currentSticker = 0;
+      renderSticker(0);
+    }, 3200);
+    return false;
+  }
+
+  function renderSticker(idx) {
+    const s = stickers[idx];
+    document.getElementById('sticker-host').innerHTML = `
+      <div class="sticker-card ${s.class}">
+        <div class="sticker-shine"></div>
+        <div class="sticker-num">${s.num}</div>
+        <div class="sticker-headline">${s.title}</div>
+        <div class="sticker-icon">${s.icon}</div>
+        <div class="sticker-detail">${s.detail}</div>
+      </div>
+    `;
+    document.querySelectorAll('#dots .sticker-dot').forEach((d, i) => {
+      d.classList.toggle('active', i <= idx);
+    });
+    const btn = document.getElementById('next-sticker');
+    btn.textContent = idx === stickers.length - 1 ? 'Ver meus prêmios →' : 'Próxima figurinha →';
+  }
+
+  function nextSticker() {
+    currentSticker++;
+    if (currentSticker >= stickers.length) {
+      goToStep('claim');
+      currentSticker = 0;
+    } else {
+      renderSticker(currentSticker);
+    }
+  }
+
+  function selectCasa(el, name) {
+    document.querySelectorAll('.casa-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedCasa = name;
+    const btn = document.getElementById('continue-btn');
+    btn.disabled = false;
+    btn.textContent = `Cadastrar na ${name} →`;
+    btn.onclick = () => {
+      // TODO: redirecionar pro link de afiliação real da casa
+      alert(`Redirecionando pra ${name}...\n\nNa versão final, abre link de afiliação rastreado.`);
+    };
+  }
+
+  // Máscara telefone BR
+  document.getElementById('phone').addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    else if (v.length > 6) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    else if (v.length > 2) v = v.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+    e.target.value = v;
+  });
+</script>
+</body>
+</html>
