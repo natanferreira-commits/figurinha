@@ -270,6 +270,31 @@
     width: 32px;
   }
 
+  /* ===== Seção do Pacote (dentro do hero) ===== */
+  .pack-section {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .pack-section-eyebrow {
+    color: var(--text-mute);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .pack-section-title {
+    font-size: 32px; font-weight: 900;
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .pack-section-desc {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
   .prizes-preview {
     display: flex; flex-direction: column; gap: 10px;
     margin-bottom: 28px;
@@ -840,62 +865,33 @@
     stroke: var(--text-mute); fill: none;
   }
 
-  /* ===== COMPLIANCE FOOTER ===== */
+  /* ===== COMPLIANCE FOOTER (simplificado) ===== */
   .footer {
-    margin-top: 40px; padding: 28px 0 32px;
+    margin-top: 56px; padding: 24px 0 28px;
     border-top: 1px solid var(--border);
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-  }
-  .compliance-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 18px;
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    border-radius: 24px;
-    font-size: 12px; font-weight: 800;
-    color: var(--text); letter-spacing: 0.1em;
-    backdrop-filter: blur(8px);
-  }
-  .compliance-badge svg {
-    width: 16px; height: 16px;
-    fill: var(--primary);
+    text-align: center;
   }
   .compliance-text {
-    font-size: 13px; line-height: 1.6;
-    color: var(--text-dim); text-align: center;
-    max-width: 380px;
+    font-size: 12px; line-height: 1.5;
+    color: var(--text-mute);
+    margin: 0 0 8px;
   }
-  .compliance-phone {
-    display: flex; align-items: center; gap: 10px;
-    padding: 14px 20px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    font-size: 13px; color: var(--text);
-    width: 100%; max-width: 380px; justify-content: center;
-    backdrop-filter: blur(8px);
-  }
-  .compliance-phone strong {
-    color: var(--text); font-weight: 800;
-    letter-spacing: 0.02em;
-  }
-  .compliance-phone svg {
-    width: 16px; height: 16px;
-    stroke: var(--text-dim); fill: none;
+  .compliance-text strong {
+    color: var(--text-dim); font-weight: 700;
   }
   .footer-links {
-    display: flex; gap: 8px; align-items: center;
-    font-size: 12px; color: var(--text-mute);
+    display: flex; gap: 8px; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--text-mute);
+    margin-bottom: 4px;
   }
   .footer-links a {
     color: var(--text-mute); text-decoration: none;
-    transition: color 0.2s ease;
   }
   .footer-links a:hover { color: var(--text-dim); }
-  .footer-links span { color: var(--border); }
+  .footer-links span { opacity: 0.4; }
   .footer-cnpj {
-    font-size: 11px; color: var(--text-mute);
-    letter-spacing: 0.02em;
+    font-size: 10px; color: var(--text-mute);
+    opacity: 0.6;
   }
 
   /* ===== Responsive ===== */
@@ -996,39 +992,47 @@
         <span class="prizes-dot"></span>
       </div>
     </div>
-  </section>
 
-  <!-- ========== STEP 1: INTRO ========== -->
-  <section class="step" id="step-intro">
+    <!-- Seção do pacote (mesma página, scroll natural) -->
+    <div class="pack-section">
+      <div class="pack-section-eyebrow">PRONTO PRA ABRIR?</div>
+      <h2 class="pack-section-title">Toque no pacote</h2>
+      <p class="pack-section-desc">É grátis e leva menos de 1 minuto</p>
 
-    <div class="pack-stage">
-      <div class="pack-glow">
-        <div class="pack" onclick="goToStep('form')">
-          <div class="pack-rays"></div>
-          <div class="pack-content">
-            <div class="pack-gift">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <rect x="6" y="22" width="44" height="28" rx="3" fill="#1a1300"/>
-                <rect x="6" y="22" width="44" height="6" rx="2" fill="#0a0900"/>
-                <rect x="25" y="22" width="6" height="28" fill="#FF6B00"/>
-                <rect x="25" y="14" width="6" height="10" fill="#FF6B00"/>
-                <ellipse cx="20" cy="14" rx="6" ry="5" fill="#FF6B00"/>
-                <ellipse cx="36" cy="14" rx="6" ry="5" fill="#FF6B00"/>
-              </svg>
-            </div>
-            <div class="pack-title">PACOTÃO<br>PREMIADO</div>
-            <div class="pack-subtitle">DUPLA</div>
-            <div class="pack-dots">
-              <span></span><span></span><span></span><span></span><span></span>
+      <div class="pack-stage">
+        <div class="pack-glow">
+          <div class="pack" onclick="goToStep('form')">
+            <div class="pack-rays"></div>
+            <div class="pack-content">
+              <div class="pack-gift">
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                  <rect x="6" y="22" width="44" height="28" rx="3" fill="#1a1300"/>
+                  <rect x="6" y="22" width="44" height="6" rx="2" fill="#0a0900"/>
+                  <rect x="25" y="22" width="6" height="28" fill="#FF6B00"/>
+                  <rect x="25" y="14" width="6" height="10" fill="#FF6B00"/>
+                  <ellipse cx="20" cy="14" rx="6" ry="5" fill="#FF6B00"/>
+                  <ellipse cx="36" cy="14" rx="6" ry="5" fill="#FF6B00"/>
+                </svg>
+              </div>
+              <div class="pack-title">PACOTE<br>PREMIADO</div>
+              <div class="pack-subtitle">DUPLA</div>
+              <div class="pack-dots">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
             </div>
           </div>
         </div>
+        <div class="pack-hint">Toque para abrir</div>
       </div>
-      <div class="pack-hint">Toque para abrir</div>
-    </div>
 
-    <div class="cta-wrap">
-      <button class="cta" onclick="goToStep('form')">Quero meu pacote</button>
+      <div class="cta-wrap">
+        <button class="cta" onclick="goToStep('form')">
+          <div class="cta-content">
+            <span>ABRIR MEU PACOTE →</span>
+            <span class="cta-sub">100% Grátis</span>
+          </div>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1174,31 +1178,17 @@
     <button class="cta" id="continue-btn" disabled>Selecione uma casa parceira</button>
   </section>
 
-  <!-- ========== FOOTER COMPLIANCE ========== -->
+  <!-- ========== FOOTER ========== -->
   <footer class="footer">
-    <div class="compliance-badge">
-      <svg viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg>
-      JOGO RESPONSÁVEL
-    </div>
-
     <p class="compliance-text">
-      Aposta esportiva é entretenimento, não fonte de renda. Aposte com responsabilidade.
+      <strong>+18</strong> · Aposta é entretenimento, não fonte de renda. Em caso de dependência, ligue <strong>0800 026 1818</strong>.
     </p>
-
-    <div class="compliance-phone">
-      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-      </svg>
-      Em caso de dependência, ligue <strong>0800 026 1818</strong>
-    </div>
-
     <div class="footer-links">
       <a href="#">Termos de Uso</a>
       <span>·</span>
       <a href="#">Política de Privacidade</a>
     </div>
-
-    <div class="footer-cnpj">CNPJ: 36.213.131/0001-02</div>
+    <div class="footer-cnpj">© 2026 Dupla Aposta · CNPJ 36.213.131/0001-02</div>
   </footer>
 
 </div>
