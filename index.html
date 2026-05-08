@@ -1479,6 +1479,13 @@
   function goToStep(stepId) {
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step-' + stepId).classList.add('active');
+
+    // BG da Copa só aparece na hero
+    const heroBg = document.querySelector('.hero-bg-image');
+    if (heroBg) {
+      heroBg.style.display = stepId === 'hero' ? 'block' : 'none';
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
