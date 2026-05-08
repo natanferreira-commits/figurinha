@@ -119,11 +119,44 @@
     pointer-events: none;
     z-index: 0;
   }
-  /* Overlay sutil escuro pra ajustar contraste */
+  /* Overlay escuro pra melhorar contraste */
   .hero-bg-image::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(5, 13, 28, 0.15) 0%, rgba(5, 13, 28, 0.5) 100%);
+    background: linear-gradient(180deg,
+      rgba(5, 13, 28, 0.35) 0%,
+      rgba(5, 13, 28, 0.55) 60%,
+      rgba(5, 13, 28, 0.75) 100%);
+  }
+  /* Desktop: imagem horizontal full-width + overlay mais forte */
+  @media (min-width: 768px) {
+    .hero-bg-image {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      transform: none;
+      width: 100vw;
+      height: 100vh;
+      max-height: 900px;
+      background-image: url('assets/hero-bg-desktop.png');
+      background-size: cover;
+      background-position: center top;
+      -webkit-mask-image: linear-gradient(180deg,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0.9) 60%,
+        rgba(0,0,0,0.5) 80%,
+        rgba(0,0,0,0) 100%);
+      mask-image: linear-gradient(180deg,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0.9) 60%,
+        rgba(0,0,0,0.5) 80%,
+        rgba(0,0,0,0) 100%);
+    }
+    .hero-bg-image::after {
+      background: linear-gradient(180deg,
+        rgba(5, 13, 28, 0.55) 0%,
+        rgba(5, 13, 28, 0.7) 60%,
+        rgba(5, 13, 28, 0.92) 100%);
+    }
   }
 
   .hero-typography {
