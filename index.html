@@ -865,6 +865,94 @@
     stroke: var(--text-mute); fill: none;
   }
 
+  /* ===== Tela Telegram ===== */
+  .telegram-stage {
+    text-align: center;
+    padding: 24px 0 0;
+  }
+  .telegram-icon {
+    width: 96px; height: 96px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #29b6f6 0%, #0288d1 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 32px rgba(2, 136, 209, 0.4);
+    animation: pulseTg 2s ease infinite;
+  }
+  .telegram-icon svg { width: 56px; height: 56px; fill: #fff; }
+  @keyframes pulseTg {
+    0%, 100% { transform: scale(1); box-shadow: 0 12px 32px rgba(2, 136, 209, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 16px 40px rgba(2, 136, 209, 0.6); }
+  }
+  .telegram-title {
+    font-size: 28px; font-weight: 900;
+    line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .telegram-sub {
+    font-size: 15px; color: var(--text-dim);
+    line-height: 1.5; margin-bottom: 28px;
+  }
+  .telegram-prizes-mini {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  .telegram-prizes-title {
+    font-size: 11px; font-weight: 800;
+    color: var(--text-mute); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .telegram-prize-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    font-size: 14px; color: var(--text);
+  }
+  .telegram-prize-item svg {
+    width: 18px; height: 18px;
+    color: #2563EB; flex-shrink: 0;
+  }
+  .telegram-steps {
+    background: rgba(2, 136, 209, 0.1);
+    border: 1px solid rgba(2, 136, 209, 0.3);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  .telegram-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 6px 0;
+    font-size: 13px; line-height: 1.4;
+  }
+  .telegram-step strong {
+    color: #29b6f6; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .cta-telegram {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(180deg, #29b6f6 0%, #0288d1 100%);
+    color: #ffffff;
+    font-size: 16px; font-weight: 800; letter-spacing: 0.02em;
+    border: none; border-radius: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow:
+      0 12px 28px rgba(2, 136, 209, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+    text-align: center;
+    font-family: inherit;
+  }
+  .cta-telegram:hover { transform: translateY(-1px); }
+  .cta-telegram:active { transform: translateY(2px); }
+  .cta-telegram svg { width: 22px; height: 22px; fill: currentColor; }
+
   /* ===== COMPLIANCE FOOTER (simplificado) ===== */
   .footer {
     margin-top: 56px; padding: 24px 0 28px;
@@ -926,7 +1014,7 @@
       Participe da campanha que vai <strong>premiar a galera</strong> antes da Copa do Mundo e descubra <strong>quais surpresas</strong> tu pode levar com apenas <strong>1 clique no pacote</strong>.
     </p>
 
-    <button class="cta" onclick="goToStep('intro')">
+    <button class="cta" onclick="scrollToPack()">
       <div class="cta-content">
         <span>ABRIR MEU PACOTE →</span>
         <span class="cta-sub">100% Grátis</span>
@@ -1001,7 +1089,7 @@
 
       <div class="pack-stage">
         <div class="pack-glow">
-          <div class="pack" onclick="goToStep('form')">
+          <div class="pack" onclick="openPack()">
             <div class="pack-rays"></div>
             <div class="pack-content">
               <div class="pack-gift">
@@ -1026,7 +1114,7 @@
       </div>
 
       <div class="cta-wrap">
-        <button class="cta" onclick="goToStep('form')">
+        <button class="cta" onclick="openPack()">
           <div class="cta-content">
             <span>ABRIR MEU PACOTE →</span>
             <span class="cta-sub">100% Grátis</span>
@@ -1102,7 +1190,44 @@
     </div>
   </section>
 
-  <!-- ========== STEP 5: CLAIM ========== -->
+  <!-- ========== STEP 5: TELEGRAM (resgate) ========== -->
+  <section class="step" id="step-telegram">
+    <div class="telegram-stage">
+      <div class="telegram-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+        </svg>
+      </div>
+
+      <h2 class="telegram-title">Você ganhou! 🎉</h2>
+      <p class="telegram-sub">Pra resgatar seus prêmios, é só entrar no nosso Telegram. Nosso bot vai te conduzir.</p>
+
+      <div class="telegram-prizes-mini">
+        <div class="telegram-prizes-title">Seus prêmios</div>
+        <div class="telegram-prize-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          R$ 50 de banca
+        </div>
+        <div class="telegram-prize-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Acesso VIP por 30 dias
+        </div>
+      </div>
+
+      <div class="telegram-steps">
+        <div class="telegram-step"><strong>1.</strong><span>Clica no botão pra abrir o Telegram</span></div>
+        <div class="telegram-step"><strong>2.</strong><span>Inicia o bot e segue as instruções</span></div>
+        <div class="telegram-step"><strong>3.</strong><span>Recebe os prêmios direto no chat</span></div>
+      </div>
+
+      <a class="cta-telegram" href="https://t.me/PacotePremiadoBot" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+        ABRIR NO TELEGRAM
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== STEP 6: CLAIM (descontinuado, mantido pra fallback) ========== -->
   <section class="step" id="step-claim">
     <h2 class="claim-title">Você ganhou!</h2>
     <p class="claim-sub">Falta só 1 passo pra resgatar.</p>
@@ -1319,6 +1444,23 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Scroll suave da hero pra seção do pacote (mesma página)
+  function scrollToPack() {
+    const target = document.querySelector('.pack-section');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Clique no pacote → vai direto pra animação de abertura (sem form)
+  function openPack() {
+    goToStep('opening');
+    spawnConfetti();
+    setTimeout(() => {
+      goToStep('reveal');
+      currentSticker = 0;
+      renderSticker(0);
+    }, 3200);
+  }
+
   // Gera confete dinamicamente
   function spawnConfetti() {
     const container = document.getElementById('confetti-container');
@@ -1381,13 +1523,13 @@
       d.classList.toggle('active', i <= idx);
     });
     const btn = document.getElementById('next-sticker');
-    btn.textContent = idx === stickers.length - 1 ? 'Ver meus prêmios →' : 'Próxima figurinha →';
+    btn.textContent = idx === stickers.length - 1 ? 'Resgatar no Telegram →' : 'Próxima figurinha →';
   }
 
   function nextSticker() {
     currentSticker++;
     if (currentSticker >= stickers.length) {
-      goToStep('claim');
+      goToStep('telegram');
       currentSticker = 0;
     } else {
       renderSticker(currentSticker);
