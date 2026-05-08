@@ -1450,15 +1450,9 @@
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // Clique no pacote → vai direto pra animação de abertura (sem form)
+  // Clique no pacote → vai pro form de captura de lead
   function openPack() {
-    goToStep('opening');
-    spawnConfetti();
-    setTimeout(() => {
-      goToStep('reveal');
-      currentSticker = 0;
-      renderSticker(0);
-    }, 3200);
+    goToStep('form');
   }
 
   // Gera confete dinamicamente
