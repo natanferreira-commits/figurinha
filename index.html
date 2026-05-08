@@ -1217,7 +1217,6 @@
       <div class="stickers-row" id="dots">
         <div class="sticker-dot active"></div>
         <div class="sticker-dot"></div>
-        <div class="sticker-dot"></div>
       </div>
 
       <div id="sticker-host"></div>
@@ -1360,7 +1359,7 @@
   const stickers = [
     {
       class: 'gold',
-      num: 'FIGURINHA 01 / 03',
+      num: 'FIGURINHA 01 / 02',
       title: 'R$ 50 DE BANCA',
       icon: `
         <svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
@@ -1408,7 +1407,7 @@
     },
     {
       class: 'purple',
-      num: 'FIGURINHA 02 / 03',
+      num: 'FIGURINHA 02 / 02',
       title: 'GRUPO VIP',
       icon: `
         <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
@@ -1439,38 +1438,6 @@
         </svg>`,
       detail: '30 dias de tips exclusivas no Grupo VIP do Dupla.'
     },
-    {
-      class: '',
-      num: 'FIGURINHA 03 / 03',
-      title: 'FALTA 1 PASSO',
-      icon: `
-        <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="targetGrad">
-              <stop offset="0%" stop-color="#FFD700"/>
-              <stop offset="100%" stop-color="#FFA500"/>
-            </radialGradient>
-            <filter id="shadow3" x="-10%" y="-10%" width="120%" height="120%">
-              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
-            </filter>
-          </defs>
-          <g filter="url(#shadow3)">
-            <!-- Anéis do alvo -->
-            <circle cx="60" cy="60" r="50" fill="#fff" stroke="#1e293b" stroke-width="2"/>
-            <circle cx="60" cy="60" r="40" fill="#dc2626" stroke="#fff" stroke-width="2"/>
-            <circle cx="60" cy="60" r="30" fill="#fff" stroke="#1e293b" stroke-width="2"/>
-            <circle cx="60" cy="60" r="20" fill="#dc2626" stroke="#fff" stroke-width="2"/>
-            <circle cx="60" cy="60" r="10" fill="url(#targetGrad)" stroke="#1e293b" stroke-width="2"/>
-            <!-- Flecha cravada no centro -->
-            <line x1="60" y1="60" x2="100" y2="20" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
-            <line x1="60" y1="60" x2="100" y2="20" stroke="#FFD700" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Penas da flecha -->
-            <path d="M95 18 L102 13 L100 22 Z" fill="#dc2626" stroke="#1e293b" stroke-width="1"/>
-            <path d="M97 25 L104 20 L102 29 Z" fill="#dc2626" stroke="#1e293b" stroke-width="1"/>
-          </g>
-        </svg>`,
-      detail: 'Pra resgatar, é só fazer 1 cadastro numa casa parceira.'
-    }
   ];
 
   let currentSticker = 0;
