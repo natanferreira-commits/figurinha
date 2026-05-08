@@ -1532,10 +1532,26 @@
     }
   }
 
+  // Salva lead no localStorage (até backend ser conectado)
+  function saveLead(data) {
+    try {
+      const leads = JSON.parse(localStorage.getItem('pacote_leads') || '[]');
+      leads.push({
+        ...data,
+        timestamp: new Date().toISOString(),
+        id: 'lead_' + Date.now()
+      });
+      localStorage.setItem('pacote_leads', JSON.stringify(leads));
+      // TODO: também enviar pro backend (POST /api/leads, webhook DataCrazy, etc.)
+    } catch (e) {
+      console.error('Erro salvando lead:', e);
+    }
+  }
+
   function submitForm(e) {
     e.preventDefault();
-    // TODO: enviar dados pro backend (POST /api/leads)
     const data = Object.fromEntries(new FormData(e.target));
+    saveLead(data);
     console.log('Lead capturado:', data);
     goToStep('opening');
     spawnConfetti();

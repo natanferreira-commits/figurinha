@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Pacote Premiado</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a1628;
+    --bg-2: #0f1f3d;
+    --card: #15243f;
+    --border: #1f2f4d;
+    --text: #ffffff;
+    --text-dim: #94a3b8;
+    --text-mute: #64748b;
+    --primary: #2563EB;
+    --primary-hover: #1d4ed8;
+    --success: #00C853;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at top, #14294d 0%, #0c1e3d 50%, #050d1c 100%);
+    background-attachment: fixed;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 20px; }
+
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 800; font-size: 18px;
+  }
+  .brand-tag {
+    background: rgba(37, 99, 235, 0.15);
+    color: #60a5fa;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+  .actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 13px; font-weight: 700;
+    border-radius: 8px; cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    text-decoration: none;
+  }
+  .btn:hover {
+    border-color: var(--primary);
+    background: rgba(37, 99, 235, 0.1);
+  }
+  .btn-primary {
+    background: linear-gradient(180deg, #3b82f6, #2563EB);
+    border-color: transparent;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(180deg, #60a5fa, #3b82f6);
+    border-color: transparent;
+  }
+  .btn-danger {
+    color: #fca5a5;
+  }
+  .btn-danger:hover {
+    border-color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+  }
+  .btn svg { width: 16px; height: 16px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 700;
+    color: var(--text-mute); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .stat-value {
+    font-size: 28px; font-weight: 900; letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .stat-value.primary { color: #60a5fa; }
+  .stat-value.success { color: #4ade80; }
+  .stat-value.warning { color: #fbbf24; }
+
+  .table-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .table-title {
+    font-size: 16px; font-weight: 800;
+  }
+  .search {
+    padding: 8px 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 13px;
+    width: 240px; max-width: 50%;
+  }
+  .search::placeholder { color: var(--text-mute); }
+  .search:focus { outline: none; border-color: var(--primary); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead {
+    background: var(--bg-2);
+  }
+  thead th {
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 11px; font-weight: 800;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(37, 99, 235, 0.04); }
+  tbody td.muted { color: var(--text-dim); font-size: 13px; }
+  tbody td.id-cell { color: var(--text-mute); font-size: 12px; font-family: 'SF Mono', Menlo, Consolas, monospace; }
+
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-mute);
+  }
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+  .empty-title {
+    font-size: 16px; font-weight: 700;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .empty-desc {
+    font-size: 13px;
+  }
+
+  .alert-info {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .alert-info strong { color: #fcd34d; }
+
+  @media (max-width: 640px) {
+    table { font-size: 12px; }
+    thead th, tbody td { padding: 10px 12px; }
+    .table-header { flex-direction: column; align-items: stretch; gap: 10px; }
+    .search { width: 100%; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="brand">
+      🎁 Pacote Premiado
+      <span class="brand-tag">ADMIN</span>
+    </div>
+    <div class="actions">
+      <a class="btn" href="index.html">← Voltar à landing</a>
+      <button class="btn btn-primary" onclick="exportCSV()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Exportar CSV
+      </button>
+      <button class="btn btn-danger" onclick="clearLeads()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-2 14a2 2 0 01-2 2H9a2 2 0 01-2-2L5 6"/>
+        </svg>
+        Limpar
+      </button>
+    </div>
+  </header>
+
+  <div class="alert-info">
+    ⚠️ <strong>Aviso de armazenamento:</strong> Esses leads estão guardados no <strong>localStorage do seu browser</strong>. Cada visitante tem os próprios leads no próprio browser. Pra centralizar (ver leads de todos os visitantes), conecta um backend (Google Sheets, DataCrazy, ou banco próprio).
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">Total de leads</div>
+      <div class="stat-value primary" id="stat-total">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Hoje</div>
+      <div class="stat-value success" id="stat-today">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Últimos 7 dias</div>
+      <div class="stat-value warning" id="stat-week">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Último cadastro</div>
+      <div class="stat-value" id="stat-last" style="font-size: 14px; font-weight: 700;">—</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header">
+      <div class="table-title">Leads capturados</div>
+      <input type="text" class="search" id="search" placeholder="Buscar por nome, email ou telefone..." oninput="render()">
+    </div>
+
+    <div id="content"></div>
+  </div>
+
+</div>
+
+<script>
+  function loadLeads() {
+    try {
+      return JSON.parse(localStorage.getItem('pacote_leads') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  function fmtDate(iso) {
+    try {
+      const d = new Date(iso);
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yy = d.getFullYear();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mi = String(d.getMinutes()).padStart(2, '0');
+      return `${dd}/${mm}/${yy} ${hh}:${mi}`;
+    } catch { return iso; }
+  }
+
+  function isToday(iso) {
+    const d = new Date(iso);
+    const t = new Date();
+    return d.toDateString() === t.toDateString();
+  }
+
+  function isThisWeek(iso) {
+    const d = new Date(iso);
+    const now = new Date();
+    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    return d >= sevenDaysAgo;
+  }
+
+  function render() {
+    const leads = loadLeads();
+    const search = document.getElementById('search').value.toLowerCase();
+    const filtered = search
+      ? leads.filter(l =>
+          (l.name && l.name.toLowerCase().includes(search)) ||
+          (l.email && l.email.toLowerCase().includes(search)) ||
+          (l.phone && l.phone.toLowerCase().includes(search)))
+      : leads;
+
+    // Stats
+    document.getElementById('stat-total').textContent = leads.length;
+    document.getElementById('stat-today').textContent = leads.filter(l => isToday(l.timestamp)).length;
+    document.getElementById('stat-week').textContent = leads.filter(l => isThisWeek(l.timestamp)).length;
+    const last = leads[leads.length - 1];
+    document.getElementById('stat-last').textContent = last ? fmtDate(last.timestamp) : '—';
+
+    // Table
+    const content = document.getElementById('content');
+    if (filtered.length === 0) {
+      content.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">📭</div>
+          <div class="empty-title">${search ? 'Nenhum resultado' : 'Nenhum lead ainda'}</div>
+          <div class="empty-desc">${search ? 'Tenta outra busca' : 'Submeta o form na landing pra ver os leads aqui'}</div>
+        </div>
+      `;
+      return;
+    }
+
+    const rows = [...filtered].reverse().map((l, i) => `
+      <tr>
+        <td class="muted">${fmtDate(l.timestamp)}</td>
+        <td><strong>${l.name || '—'}</strong></td>
+        <td>${l.phone || '—'}</td>
+        <td class="muted">${l.email || '—'}</td>
+        <td class="id-cell">${l.id || ''}</td>
+      </tr>
+    `).join('');
+
+    content.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Nome</th>
+            <th>WhatsApp</th>
+            <th>Email</th>
+            <th>ID</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function exportCSV() {
+    const leads = loadLeads();
+    if (leads.length === 0) {
+      alert('Sem leads pra exportar.');
+      return;
+    }
+    const headers = ['Data', 'Nome', 'WhatsApp', 'Email', 'ID'];
+    const rows = leads.map(l => [
+      fmtDate(l.timestamp),
+      (l.name || '').replace(/"/g, '""'),
+      l.phone || '',
+      (l.email || '').replace(/"/g, '""'),
+      l.id || ''
+    ].map(v => `"${v}"`).join(','));
+    const csv = '﻿' + [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `pacote-premiado-leads-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function clearLeads() {
+    const leads = loadLeads();
+    if (leads.length === 0) {
+      alert('Já tá vazio.');
+      return;
+    }
+    if (confirm(`Tem certeza que quer apagar TODOS os ${leads.length} leads? Essa ação não pode ser desfeita.`)) {
+      localStorage.removeItem('pacote_leads');
+      render();
+    }
+  }
+
+  // Render inicial
+  render();
+
+  // Atualiza a cada 5s caso novo lead seja adicionado em outra aba
+  setInterval(render, 5000);
+</script>
+</body>
+</html>
