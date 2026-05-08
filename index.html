@@ -91,10 +91,41 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ===== HERO (estilo Base Club) ===== */
+  /* ===== HERO (com background da Copa) ===== */
+  #step-hero {
+    position: relative;
+    padding-top: 360px;
+  }
+  .hero-bg-image {
+    position: absolute;
+    top: -64px;
+    left: -20px; right: -20px;
+    height: 560px;
+    background: url('assets/hero-bg.png') center top / cover no-repeat;
+    -webkit-mask-image: linear-gradient(180deg,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.95) 50%,
+      rgba(0,0,0,0.6) 75%,
+      rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(180deg,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.95) 50%,
+      rgba(0,0,0,0.6) 75%,
+      rgba(0,0,0,0) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* Overlay sutil escuro pra ajustar contraste */
+  .hero-bg-image::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(5, 13, 28, 0.15) 0%, rgba(5, 13, 28, 0.5) 100%);
+  }
+
   .hero-typography {
     position: relative;
-    margin: 20px 0 30px;
+    z-index: 2;
+    margin: 0 0 30px;
     text-align: center;
   }
   .hero-line {
@@ -1004,6 +1035,8 @@
 
   <!-- ========== STEP 0: HERO (apresentação) ========== -->
   <section class="step active" id="step-hero">
+    <div class="hero-bg-image"></div>
+
     <div class="hero-typography">
       <h1 class="hero-line small">Pacote Premiado</h1>
       <h1 class="hero-line">ABRA</h1>
