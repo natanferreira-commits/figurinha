@@ -1295,7 +1295,7 @@
         <div class="telegram-step"><strong>3.</strong><span>Recebe os prêmios direto no chat</span></div>
       </div>
 
-      <a class="cta-telegram" href="https://t.me/PacotePremiadoBot" target="_blank" rel="noopener">
+      <a class="cta-telegram" href="https://t.me/sendupla_bot?start=69fcf99d6f81ff187b08d925" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
         ABRIR NO TELEGRAM
       </a>
@@ -1537,19 +1537,35 @@
     }
   }
 
-  // Salva lead no localStorage (até backend ser conectado)
+  const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzulGtmuZyKz_FkgCTi4gjEG0qE9LxJgezVJhS-jpFtZ7qkV07tYamM5TNxInNl5ILgJA/exec';
+
   function saveLead(data) {
+    const lead = {
+      ...data,
+      timestamp: new Date().toISOString(),
+      id: 'lead_' + Date.now(),
+      referrer: document.referrer || '',
+      userAgent: navigator.userAgent || ''
+    };
+
     try {
       const leads = JSON.parse(localStorage.getItem('pacote_leads') || '[]');
-      leads.push({
-        ...data,
-        timestamp: new Date().toISOString(),
-        id: 'lead_' + Date.now()
-      });
+      leads.push(lead);
       localStorage.setItem('pacote_leads', JSON.stringify(leads));
-      // TODO: também enviar pro backend (POST /api/leads, webhook DataCrazy, etc.)
     } catch (e) {
-      console.error('Erro salvando lead:', e);
+      console.error('Erro salvando lead local:', e);
+    }
+
+    try {
+      fetch(SHEETS_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(lead),
+        keepalive: true
+      }).catch(err => console.error('Erro enviando lead pro Sheets:', err));
+    } catch (e) {
+      console.error('Erro disparando fetch:', e);
     }
   }
 
